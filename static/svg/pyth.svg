@@ -1,1 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="94mm" height="139mm" viewBox="0 0 94 139"><g transform="translate(-35.523 -98.685) scale(.8308)" fill="#0606fe"><rect width="110.34" height="16.795" x="44.789" y="260.534" rx="0" ry="0"/><rect ry="0" rx="0" y="-155.129" x="150.831" height="16.795" width="110.34" transform="rotate(90)"/><rect ry="0" rx="0" y="127.898" x="55.977" height="16.803" width="98.518"/><rect width="66.695" height="16.826" x="128.523" y="-72.155" rx="0" ry="0" transform="rotate(90)"/><path d="M54.727 170.769h19.302v24.449H54.727z"/><g stroke="#ffd205" stroke-width="2.243" stroke-linecap="round" stroke-linejoin="round"><path d="M65.267 200.829h-1.453V187.12h1.453z"/><path d="M70.525 209.508l-1.258.726-5.356-9.276 1.258-.726z"/><path d="M59.813 210.241l-1.258-.726 5.356-9.276 1.258.726z"/></g></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 266.5 394" style="enable-background:new 0 0 266.5 394;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FF2A35;}
+	.st1{fill:#0606FE;stroke:#000000;stroke-width:5.2823;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:9.4201;}
+</style>
+<rect x="4.8" y="333.8" class="st0" width="259.9" height="39.6"/>
+<rect x="225.1" y="21.5" class="st0" width="39.6" height="313.9"/>
+<rect x="31.5" y="21.5" class="st0" width="232" height="39.6"/>
+<rect x="31.5" y="21.5" class="st0" width="39.6" height="156.6"/>
+<path class="st0" d="M29,121h45.5v57.6H29V121z"/>
+<g>
+	<path class="st1" d="M53.8,191.7h-3.4v-32.3h3.4V191.7z"/>
+	<path class="st1" d="M66.2,212.2l-3,1.7l-12.6-21.8l3-1.7L66.2,212.2z"/>
+	<path class="st1" d="M40.9,213.9l-3-1.7l12.6-21.8l3,1.7L40.9,213.9z"/>
+</g>
+</svg>
