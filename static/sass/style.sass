@@ -1,31 +1,56 @@
+// COLORS
+
 $background: #ffffff
 $text: #000000
-$primary: #0606fe
-$secondary: #ffd205
+$primary: #FF2A35
+$secondary: $text
+
+// ---------------------------------------------------------------------
+// MIXIN
+
+=transition-color
+  transition: color .2s
+
+=transition-bg
+  transition: background .2s
+
+=button
+  background: $primary
+  border-radius: .5em
+  color: #FFFFFF
+  margin: 2rem 0
+  padding: 1em
+  +transition-bg
+
+  &:hover
+    background: darken($primary, 15)
+
+
+// ---------------------------------------------------------------------
+// FONTS
 
 @font-face
-  font-family: unica
-  src: url(/2020/static/fonts/UnicaOne-Regular.ttf)
-
-@font-face
-  font-family: dosis
-  font-weight: normal
-  src: url(/2020/static/fonts/Dosis-Regular.otf)
-
-@font-face
-  font-family: dosis
+  font-family: montserrat
   font-weight: bold
-  src: url(/2020/static/fonts/Dosis-Bold.otf)
+  src: url(/2020/static/fonts/Montserrat-Bold.ttf)
 
+@font-face
+  font-family: lexend
+  font-weight: normal
+  src: url(/2020/static/fonts/LexendDeca-Regular.ttf)
 
 *
   // No italic font available
   font-style: normal !important
 
+
+// ---------------------------------------------------------------------
+// GENERAL
+
 html
   color: $text
-  font-family: dosis
-  font-size: 1.2em
+  font-family: lexend
+  font-size: 1.1em
 
 body
   display: flex
@@ -37,10 +62,8 @@ h1
   display: none
 
 h2, h3, h4, h5
-  font-family: unica
-  font-weight: normal
-  letter-spacing: .1em
-  text-transform: uppercase
+  font-family: montserrat
+  font-weight: bold
   margin-top: 2em
 
 a
@@ -50,16 +73,16 @@ a
 address
   white-space: pre-line
 
-
 ul
   li
     list-style: url('../svg/tiret.svg')
 
-
+p
+  font-size: .9em
+  line-height: 1.5em
 
 .text-center
   text-align: center
-
 
 .d-flex
   display: flex
@@ -67,9 +90,7 @@ ul
 
   .card
     list-style: none
-    width: 12rem
     margin: 1rem
-
 
 .column
   display: flex
@@ -79,10 +100,7 @@ ul
     align-items: center
 
   .button
-    background-color: #0606fe
-    margin: 2rem 0
-    padding: 0.5rem
-    color: white
+    +button
 
 
 hgroup
@@ -91,10 +109,10 @@ hgroup
   flex-direction: column
 
   hr
-    width: 3rem
-    height: 5px
+    background: $primary
     border: none
-    background: #ffd205
+    height: 5px
+    width: 3rem
 
   img
     height: 3em
@@ -103,11 +121,13 @@ hgroup
 aside, nav, footer
   background: $text
   color: $background
+  font-size: .9em
 
   ul
     display: flex
     flex-wrap: wrap
     margin: 0
+    justify-content: center
     padding: 0
 
     li
@@ -116,8 +136,12 @@ aside, nav, footer
       a
         color: inherit
         display: inline-block
-        padding: 0.5em 1em
+        padding: 1em
         text-decoration: inherit
+        transition: background .2s
+
+        &:hover
+          background: $primary
 
       &.active a
         background: $primary
@@ -152,10 +176,6 @@ aside
       a
         background: transparent
 
-footer ul
-  justify-content: center
-
-
 main
   flex: 1
 
@@ -171,9 +191,6 @@ main
   article
     overflow: auto
     padding-bottom: 3em
-
-    &:not(:first-child)
-      border-top: 1px solid $secondary
 
     h3 a
       color: inherit
@@ -223,20 +240,20 @@ main
       flex-direction: column
 
     section
-      padding: 1em
+      align-items: center
       display: flex
       flex-direction: column
       flex-wrap: wrap
       justify-content: space-around
-      align-items: center
+      padding: 1em
 
       .logo
         display: block
 
         img
           display: block
-          width: 200px
           margin: 1rem
+          width: 200px
 
 
 #news
@@ -270,7 +287,7 @@ main
     background: linear-gradient(rgba(white, 0.2), rgba(white, 0.75), white)
     display: flex
     flex-direction: column
-    font-size: 1.25em
+    font-size: 1.15em
     height: 100vh
     justify-content: center
     padding-bottom: 0
@@ -301,7 +318,7 @@ main
       width: 75%
 
       &:first-of-type
-        font-family: unica
+        font-family: montserrat
         font-size: 1.5em
         line-height: 1
         margin-bottom: 0
@@ -323,16 +340,13 @@ main
         white-space: nowrap
 
         a
-          background: $primary
-          color: $background
-          display: block
-          padding: 1em
+          +button
 
+
+// ---------------------------------------------------------------------
+// RESPONSIVE
 
 @media (max-width: 800px)
-  html
-    font-size: 1em
-
   nav, footer
     ul li a
       font-size: 0.9em
@@ -348,16 +362,6 @@ main
   #index article:first-child p
     width: 95%
 
-hr
-  background-color: #ffd205
-  border: none
-  display: block
-  height: 1px
-  margin-top: 2em
-
-.level-support
-  text-align: center
-
-  hr
-    height: 3px
-    max-width: 200px
+  .d-flex
+    flex-wrap: wrap
+    justify-content: flex-start
