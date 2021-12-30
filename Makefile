@@ -16,7 +16,7 @@ serve-static: .venv
 	.venv/bin/python -m http.server 8000 -d build
 
 deploy: static
-	rsync -avz --delete -e ssh build/2020/ pyconfr@deb.afpy.org:/var/www/pycon.fr/2020/
+	rsync -avz --delete -e ssh build/2020/ pyconfr@deb2.afpy.org:/var/www/pycon.fr/2020/
 
 clean:
 	rm -rf build .venv __pycache__
