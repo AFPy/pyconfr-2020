@@ -23,8 +23,16 @@ def slug(string):
 
 
 @app.route('/')
+@app.route('/<lang>/')
 @app.route('/2020/')
+@app.route('/2021/')
+@app.route('/2022/')
+@app.route('/2020/<lang>/')
+@app.route('/2021/<lang>/')
+@app.route('/2022/<lang>/')
 @app.route('/2020/<lang>/<name>.html')
+@app.route('/2021/<lang>/<name>.html')
+@app.route('/2022/<lang>/<name>.html')
 def page(name='index', lang='fr'):
     return render_template(
         '{lang}/{name}.html.jinja2'.format(name=name, lang=lang),
