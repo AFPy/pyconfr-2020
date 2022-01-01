@@ -1,3 +1,4 @@
+from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import urlopen
 from xml.etree import ElementTree
@@ -42,8 +43,11 @@ def page(name='index', lang='fr'):
 @app.route('/2020/<lang>/talks/<category>.html')
 def talks(lang, category):
     talks = []
-    with urlopen('https://cfp-2020.pycon.fr/schedule/xml/') as fd:
-        tree = ElementTree.fromstring(fd.read().decode('utf-8'))
+    try:
+        with urlopen('https://cfp-2020.pycon.fr/schedule/xml/') as fd:
+            tree = ElementTree.fromstring(fd.read().decode('utf-8'))
+    except HTTPError:
+        tree = ElementTree.fromstring("")
     for day in tree.findall('.//day'):
         for event in day.findall('.//event'):
             talk = {child.tag: child.text for child in event}
@@ -63,8 +67,11 @@ def talks(lang, category):
 
 @app.route('/2020/<lang>/full-schedule.html')
 def schedule(lang):
-    with urlopen('https://cfp-2020.pycon.fr/schedule/html/') as fd:
-        html = fd.read().decode('utf-8')
+    try:
+        with urlopen('https://cfp-2020.pycon.fr/schedule/html/') as fd:
+            html = fd.read().decode('utf-8')
+    except HTTPError:
+        html = ""
 
     if lang == 'fr':
         html = html.replace('Room', 'Salle')
