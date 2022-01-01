@@ -116,4 +116,12 @@ def schedule(lang):
 
 @app.cli.command('freeze')
 def freeze():
-    Freezer(app).freeze()
+    freezer = Freezer(app)
+
+    @freezer.register_generator
+    def schedule():
+        yield {'lang': 'fr'}
+        yield {'lang': 'en'}
+
+    freezer.freeze()
+
