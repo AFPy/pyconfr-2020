@@ -1,3 +1,4 @@
+from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import urlopen
 from xml.etree import ElementTree
@@ -22,17 +23,17 @@ def slug(string):
     return quote(str(string).lower(), safe='')
 
 
+@app.route('/<lang>/', endpoint='lang')
+@app.route('/2020/', endpoint='2020')
+@app.route('/2021/', endpoint='2021')
+@app.route('/2022/', endpoint='2022')
+@app.route('/2020/<lang>/', endpoint='2020lang')
+@app.route('/2021/<lang>/', endpoint='2021lang')
+@app.route('/2022/<lang>/', endpoint='2022lang')
+@app.route('/2020/<lang>/<name>.html', endpoint='2020langname')
+@app.route('/2021/<lang>/<name>.html', endpoint='2021langname')
+@app.route('/2022/<lang>/<name>.html', endpoint='2022langname')
 @app.route('/')
-@app.route('/<lang>/')
-@app.route('/2020/')
-@app.route('/2021/')
-@app.route('/2022/')
-@app.route('/2020/<lang>/')
-@app.route('/2021/<lang>/')
-@app.route('/2022/<lang>/')
-@app.route('/2020/<lang>/<name>.html')
-@app.route('/2021/<lang>/<name>.html')
-@app.route('/2022/<lang>/<name>.html')
 def page(name='index', lang='fr'):
     return render_template(
         '{lang}/{name}.html.jinja2'.format(name=name, lang=lang),
@@ -42,8 +43,11 @@ def page(name='index', lang='fr'):
 @app.route('/2020/<lang>/talks/<category>.html')
 def talks(lang, category):
     talks = []
-    with urlopen('https://cfp-2020.pycon.fr/schedule/xml/') as fd:
-        tree = ElementTree.fromstring(fd.read().decode('utf-8'))
+    try:
+        with urlopen('https://cfp-2020.pycon.fr/schedule/xml/') as fd:
+            tree = ElementTree.fromstring(fd.read().decode('utf-8'))
+    except HTTPError:
+        tree = ElementTree.fromstring("")
     for day in tree.findall('.//day'):
         for event in day.findall('.//event'):
             talk = {child.tag: child.text for child in event}
@@ -63,8 +67,11 @@ def talks(lang, category):
 
 @app.route('/2020/<lang>/full-schedule.html')
 def schedule(lang):
-    with urlopen('https://cfp-2020.pycon.fr/schedule/html/') as fd:
-        html = fd.read().decode('utf-8')
+    try:
+        with urlopen('https://cfp-2020.pycon.fr/schedule/html/') as fd:
+            html = fd.read().decode('utf-8')
+    except HTTPError:
+        html = ""
 
     if lang == 'fr':
         html = html.replace('Room', 'Salle')
@@ -109,4 +116,28 @@ def schedule(lang):
 
 @app.cli.command('freeze')
 def freeze():
-    Freezer(app).freeze()
+    langs = ('fr', 'en')
+    years = ('2020', '2021', '2022')
+    names = ('conduct', 'news', 'schedule', 'sponsors', 'support', 'venue')
+
+    freezer = Freezer(app)
+
+    @freezer.register_generator
+    def alternate_urls():
+        for year in years:
+            yield (year, {})
+        for lang in langs:
+            yield ('lang', {'lang': lang})
+            for year in years:
+                yield (year + 'lang', {'lang': lang})
+                for name in names:
+                    yield (year + 'langname', {'name': name, 'lang': lang})
+
+
+    @freezer.register_generator
+    def schedule():
+        for lang in langs:
+            yield {'lang': lang}
+
+    freezer.freeze()
+
